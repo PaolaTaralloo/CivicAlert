@@ -23,6 +23,10 @@ const Login = () => {
     }
   };
 
+  const handleGoogleLogin = () => {
+    window.location.href = `${import.meta.env.VITE_APP_API_URL}/auth/google`;;
+  };
+
   return (
     <Container className="mt-5" style={{ maxWidth: '400px' }}>
       <h2 className="mb-4 text-center">Accedi</h2>
@@ -52,6 +56,14 @@ const Login = () => {
 
         <Button variant="primary" type="submit" className="w-100">
           Accedi
+        </Button>
+
+        <Button
+          variant="danger"
+          className="w-100 mt-3"
+          onClick={handleGoogleLogin}
+        >
+          Accedi con Google
         </Button>
       </Form>
     </Container>
