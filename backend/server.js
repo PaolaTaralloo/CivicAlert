@@ -6,6 +6,7 @@ import session from 'express-session';
 import passport from 'passport';
 import './config/passport.mjs';
 import authRoutes from './routes/authRoutes.js';
+import uploadRoutes from './routes/uploadRoutes.js';
 
 const app = express();
 
@@ -24,11 +25,8 @@ app.use(passport.session());
 
 
 // Registra le route
-app.get("/", (req, res) => {
-    res.status(200).json({ message: "CivicAlert API is running" });
-});
-
 app.use("/auth", authRoutes);
+app.use('/upload', uploadRoutes);
 
 
 //Connessione al database
