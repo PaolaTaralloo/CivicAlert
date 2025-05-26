@@ -32,19 +32,28 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email });
-  if (!user || !(await user.comparePassword(password))) {
-    return res.status(401).json({ message: 'Credenziali non valide' });
-  }
+  try {
+    const user = await User.findOne({ email });
+    if (!user || !(await user.comparePassword(password))) {
+      console.log('Login fallito per:', email); 
+      return res.status(401).json({ message: 'Credenziali non valide' });
+    }
 
-  res.json({
-    _id: user._id,
-    name: user.name,
-    email: user.email,
-    role: user.role,
-    token: generateToken(user),
-  });
+    const token = generateToken(user);
+    console.log('Token generato:', token); 
+
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      token
+    });
+  } catch (error) {
+    console.error('Errore login:', error); 
+    res.status(500).json({ message: 'Errore del server' });
+  }
 };
 
-// Esportazione delle funzioni
+
 export { registerUser, loginUser };

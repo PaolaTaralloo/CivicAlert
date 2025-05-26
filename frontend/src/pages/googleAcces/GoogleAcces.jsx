@@ -10,11 +10,15 @@ const GoogleSuccess = () => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get('token');
     if (token) {
-      // Decodifica token opzionalmente con jwt-decode
-      login({ token, name: 'Google User' });
+      console.log('Token ricevuto:', token);
+      const userData = {
+        token,
+        name: 'Google User'
+      };
+      login(userData);
       navigate('/dashboard');
     }
-  }, []);
+  }, [login, navigate]);
 
   return <p>Login in corso...</p>;
 };

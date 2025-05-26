@@ -16,9 +16,11 @@ const Login = () => {
     setError('');
     try {
       const res = await api.post('/auth/login', { email, password });
+      console.log('Risposta login:', res.data);
       login(res.data);
       navigate('/dashboard');
     } catch (err) {
+      console.error('Errore login:', err);
       setError('Email o password non validi');
     }
   };

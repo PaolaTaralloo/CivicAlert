@@ -7,6 +7,7 @@ import passport from 'passport';
 import './config/passport.mjs';
 import authRoutes from './routes/authRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
+import segnalazioniRoutes from './routes/segnalazioniRoutes.js';
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(passport.session());
 // Registra le route
 app.use("/auth", authRoutes);
 app.use('/upload', uploadRoutes);
+app.use('/segnalazioni', segnalazioniRoutes);
 
 
 //Connessione al database
