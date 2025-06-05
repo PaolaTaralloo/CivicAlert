@@ -18,7 +18,12 @@ const Login = () => {
       const res = await api.post('/auth/login', { email, password });
       console.log('Risposta login:', res.data);
       login(res.data);
-      navigate('/dashboard');
+      // Reindirizza in base al ruolo
+      if (res.data.role === 'admin') {
+        navigate('/dashboard-admin');
+      } else {
+        navigate('/dashboard');
+      }
     } catch (err) {
       console.error('Errore login:', err);
       setError('Email o password non validi');

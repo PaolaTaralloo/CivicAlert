@@ -41,12 +41,20 @@ const aggiornaStatoSegnalazione = async (req, res) => {
 
   try {
     const segnalazione = await Segnalazione.findById(id);
-    if (!segnalazione) return res.status(404).json({ message: 'Segnalazione non trovata' });
+    if (!segnalazione) {
+      return res.status(404).json({ message: 'Segnalazione non trovata' });
+    }
+
+    if (!['in attesa', 'in lavorazione', 'risolto'].includes(stato)) {
+      return res.status(400).json({ message: 'Stato non valido' });
+    }
 
     segnalazione.stato = stato;
     await segnalazione.save();
+    
     res.json({ message: 'Stato aggiornato', segnalazione });
   } catch (err) {
+    console.error('Errore aggiornamento:', err);
     res.status(500).json({ message: 'Errore aggiornamento', error: err.message });
   }
 };

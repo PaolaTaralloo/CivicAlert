@@ -12,8 +12,11 @@ const AuthProvider = ({ children }) => {
   });
 
   const login = (userData) => {
-    console.log('Login con dati:', userData); // Aggiungi questo log
-    setUser(userData);
+    console.log('Login con dati:', userData); // Per debugging
+    setUser({
+      ...userData,
+      role: userData.role // Assicurati che il ruolo venga salvato
+    });
     localStorage.setItem('user', JSON.stringify(userData));
   };
 

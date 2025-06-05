@@ -8,6 +8,7 @@ import './config/passport.mjs';
 import authRoutes from './routes/authRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import segnalazioniRoutes from './routes/segnalazioniRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(passport.session());
 app.use("/auth", authRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/segnalazioni', segnalazioniRoutes);
+app.use('/users', userRoutes); // Aggiungi questa linea
 
 
 //Connessione al database
@@ -37,4 +39,4 @@ connectDB()
 //Inizializza il server
 app.listen(process.env.PORT, () => {
     console.log('Server is running on port ' + process.env.PORT);
-}) 
+})

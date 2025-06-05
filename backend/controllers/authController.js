@@ -35,22 +35,24 @@ const loginUser = async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (!user || !(await user.comparePassword(password))) {
-      console.log('Login fallito per:', email); 
+      console.log('Login fallito per:', email);
       return res.status(401).json({ message: 'Credenziali non valide' });
     }
 
     const token = generateToken(user);
-    console.log('Token generato:', token); 
+    console.log('Token generato:', token);
 
     res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
       role: user.role,
-      token
+      token: generateToken(user),
     });
+
+
   } catch (error) {
-    console.error('Errore login:', error); 
+    console.error('Errore login:', error);
     res.status(500).json({ message: 'Errore del server' });
   }
 };
