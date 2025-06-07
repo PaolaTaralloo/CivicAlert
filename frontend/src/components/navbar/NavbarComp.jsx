@@ -29,7 +29,13 @@ const NavbarComp = () => {
 
             {user && (
               <>
-                <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+                {/* <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link> */}
+                 {user.role === 'cittadino' && (
+                  <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+                )}
+                {user.role === 'admin' && (
+                  <Nav.Link as={Link} to="/dashboard-admin">Dashboard Admin</Nav.Link>
+                )}
                 <NavDropdown title={user.name} id="user-dropdown">
                   <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
                 </NavDropdown>

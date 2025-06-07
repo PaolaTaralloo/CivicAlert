@@ -70,4 +70,18 @@ const eliminaSegnalazione = async (req, res) => {
 };
 
 
-export { creaSegnalazione, getSegnalazioniUtente, getTutteSegnalazioni, aggiornaStatoSegnalazione, eliminaSegnalazione};
+const getTutteSegnalazioniPubbliche = async (req, res) => {
+  try {
+    const segnalazioni = await Segnalazione.find()
+      .select('titolo categoria stato posizione createdAt') // Limita i dati sensibili
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(segnalazioni);
+  } catch (error) {
+    res.status(500).json({ message: 'Errore nel recupero segnalazioni', error });
+  }
+};
+
+
+
+export { creaSegnalazione, getSegnalazioniUtente, getTutteSegnalazioni, aggiornaStatoSegnalazione, eliminaSegnalazione, getTutteSegnalazioniPubbliche};
