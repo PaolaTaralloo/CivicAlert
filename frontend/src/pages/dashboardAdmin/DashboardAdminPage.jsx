@@ -47,6 +47,8 @@ const AdminDashboard = () => {
   });
 
   return (
+     <div className="auth-page">
+      <div className="auth-content">
     <Container className="mt-4">
       <h2 className="mb-3">Gestione Segnalazioni</h2>
       <AdminFilters filtro={filtro} setFiltro={setFiltro} />
@@ -55,6 +57,9 @@ const AdminDashboard = () => {
         onUpdateStato={handleUpdateStato}
       />
     </Container>
+    </div>
+    </div>
+  
   );
 };
 

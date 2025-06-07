@@ -7,6 +7,7 @@ const SegnalazioniTable = ({ segnalazioni }) => {
   }
 
   return (
+   
     <Table responsive striped bordered hover>
       <thead>
         <tr>
@@ -35,6 +36,7 @@ const SegnalazioniTable = ({ segnalazioni }) => {
         ))}
       </tbody>
     </Table>
+  
   );
 };
 

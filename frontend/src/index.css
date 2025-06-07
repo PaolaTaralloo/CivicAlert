@@ -1,0 +1,18 @@
+/* Stili per le pagine di autenticazione */
+body, #root {
+  min-height: 81vh;
+}
+
+.auth-page {
+  min-height: 81vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-content {
+  flex: 1;
+}
+
+footer {
+  margin-top: auto;
+}

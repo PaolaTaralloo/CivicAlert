@@ -31,11 +31,16 @@ const Dashboard = () => {
   );
 
   return (
+    <div className="auth-page">
+      <div className="auth-content">
     <Container className="mt-4">
       <DashboardHeader query={query} setQuery={setQuery} />
       <h4 className="mb-3">Le mie segnalazioni</h4>
       <SegnalazioniTable segnalazioni={filtered} />
     </Container>
+    </div>
+    </div>
+
   );
 };
 

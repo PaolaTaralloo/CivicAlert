@@ -35,45 +35,49 @@ const Login = () => {
   };
 
   return (
-    <Container className="mt-5" style={{ maxWidth: '400px' }}>
-      <h2 className="mb-4 text-center">Accedi</h2>
-      {error && <Alert variant="danger">{error}</Alert>}
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formEmail" className="mb-3">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Inserisci email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-          />
-        </Form.Group>
+    <div className="auth-page">
+      <div className="auth-content">
+        <Container className="py-5" style={{ maxWidth: '400px' }}>
+          <h2 className="mb-4 text-center">Accedi</h2>
+          {error && <Alert variant="danger">{error}</Alert>}
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="formEmail" className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Inserisci email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
+              />
+            </Form.Group>
 
-        <Form.Group controlId="formPassword" className="mb-4">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Inserisci password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-          />
-        </Form.Group>
+            <Form.Group controlId="formPassword" className="mb-4">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Inserisci password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                required
+              />
+            </Form.Group>
 
-        <Button variant="primary" type="submit" className="w-100">
-          Accedi
-        </Button>
+            <Button variant="primary" type="submit" className="w-100">
+              Accedi
+            </Button>
 
-        <Button
-          variant="danger"
-          className="w-100 mt-3"
-          onClick={handleGoogleLogin}
-        >
-          Accedi con Google
-        </Button>
-      </Form>
-    </Container>
+            <Button
+              variant="danger"
+              className="w-100 mt-3"
+              onClick={handleGoogleLogin}
+            >
+              Accedi con Google
+            </Button>
+          </Form>
+        </Container>
+      </div>
+    </div>
   );
 };
 

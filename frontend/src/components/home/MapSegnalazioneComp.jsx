@@ -59,7 +59,8 @@ const SegnalazioniMap = () => {
     }, []);
 
     return (
-        <Container className="p-0">
+        <Container className="p-0 text-center">
+            <h3 className="fw-semibold mb-4 text-dark my-5">Segnalazioni in corso</h3>
             <div style={{ height: '500px', width: '100%', marginTop: '2rem' }}>
                 <MapContainer center={[40.8522, 14.2681]} zoom={13} scrollWheelZoom={true} style={{ height: '100%' }}>
                     <TileLayer

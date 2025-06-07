@@ -11,6 +11,7 @@ import DashboardUser from './pages/dashboardUser/DashboardUserPage.jsx'
 import Error from './pages/error/ErrorPage.jsx';
 import AdminDashboard from './pages/dashboardAdmin/DashboardAdminPage.jsx';
 import './App.css'
+import Footer from './components/footer/FooterComp.jsx';
 
 
 
@@ -35,13 +36,16 @@ function App() {
           <Route path="/dashboard" element={<DashboardUser />} />
         </>
         }
+        
         {/* Rotte Admin */}
         {user && user.role==="admin" && 
         <Route path="/dashboard-admin" element={<AdminDashboard />} />
         }
-       
+
+        {/* Rotta Pubbliche */}
         <Route path="/*" element={<Error />} />
       </Routes>
+      <Footer />
     </Router>
 
   )
