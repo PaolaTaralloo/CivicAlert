@@ -72,7 +72,9 @@ const eliminaSegnalazione = async (req, res) => {
 
 const getTutteSegnalazioniPubbliche = async (req, res) => {
   try {
-    const segnalazioni = await Segnalazione.find()
+    const segnalazioni = await Segnalazione.find({
+      stato: { $in: ['in attesa', 'in lavorazione'] }
+    })
       .select('titolo categoria stato posizione createdAt') // Limita i dati sensibili
       .sort({ createdAt: -1 });
 

@@ -13,21 +13,50 @@ L.Icon.Default.mergeOptions({
     shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 });
 
+
+// Icone personalizzate per i marker in base allo stato della segnalazione
+const markerIcons = {
+    'in attesa': new L.Icon({
+        iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png',
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32],
+    }),
+    'in lavorazione': new L.Icon({
+        iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/orange-dot.png',
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32],
+    }),
+    'risolto': new L.Icon({
+        iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png',
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32],
+    }),
+};
+
+
+// Componente per visualizzare le segnalazioni su una mappa
 const SegnalazioniMap = () => {
     const [segnalazioni, setSegnalazioni] = useState([]);
-    const { user } = useContext(AuthContext);
-
+    
     useEffect(() => {
         const fetchSegnalazioni = async () => {
             try {
                 const res = await api.get('/segnalazioni/pubbliche');
-                setSegnalazioni(res.data);
+                // Verifica nel client che stiamo ricevendo solo le segnalazioni desiderate
+                console.log('Segnalazioni ricevute:', res.data);
+                const segnalazioniFiltrate = res.data.filter(s => 
+                    ['in attesa', 'in lavorazione'].includes(s.stato)
+                );
+                setSegnalazioni(segnalazioniFiltrate);
             } catch (err) {
                 console.error('Errore nel recupero delle segnalazioni', err);
             }
         };
         fetchSegnalazioni();
-    }, [user]);
+    }, []);
 
     return (
         <Container className="p-0">
@@ -40,7 +69,9 @@ const SegnalazioniMap = () => {
 
 
                     {segnalazioni.map((s) => (
-                        <Marker key={s._id} position={[s.posizione.lat, s.posizione.lng]}>
+                        <Marker key={s._id}
+                            position={[s.posizione.lat, s.posizione.lng]}
+                            icon={markerIcons[s.stato] || markerIcons['in attesa']}>
                             <Popup>
                                 <strong>{s.titolo}</strong><br />
                                 {s.categoria}<br />
