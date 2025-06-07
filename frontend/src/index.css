@@ -1,18 +1,43 @@
-/* Stili per le pagine di autenticazione */
-body, #root {
-  min-height: 81vh;
+/* Reset e stili base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Layout principale */
+main {
+  flex: 1 0 auto;
+}
+
+/* Stili per le pagine di autenticazione */
 .auth-page {
-  min-height: 81vh;
+  min-height: 82vh;
   display: flex;
   flex-direction: column;
 }
 
 .auth-content {
-  flex: 1;
+  flex: 1 0 auto;
+  padding: 2rem 0;
 }
 
+/* Footer */
 footer {
-  margin-top: auto;
+  flex-shrink: 0;
+  width: 100%;
+  background-color: #212529;
+  color: white;
 }
