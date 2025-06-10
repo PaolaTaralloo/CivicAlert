@@ -63,7 +63,20 @@ const Login = () => {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit" className="w-100">
+            <Button type="submit" className="w-100" 
+            style={{
+                backgroundColor: '#413CB8',
+                borderColor: '#413CB8',
+                transition: 'all 0.3s ease',
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = '#2F2E40';
+                e.target.style.borderColor = '#2F2E40';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = '#413CB8';
+                e.target.style.borderColor = '#413CB8';
+              }}>
               Accedi
             </Button>
 

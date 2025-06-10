@@ -21,25 +21,31 @@ const steps = [
 
 const ComeFunziona = () => {
   return (
-    <Container className="text-center py-5">
+    <Container className="text-center py-5 mb-5">
       <h3 className="mb-4 fw-semibold">Come funziona?</h3>
       <Row className="g-4">
         {steps.map((step, i) => (
           <Col md={4} key={i}>
-            <div className="p-4 bg-light rounded shadow-sm h-100">
+            <div className="p-4 bg-light rounded shadow-sm h-100 position-relative" style={{ marginTop: '30px'}}>
               <div 
-                className="rounded-circle text-white fw-bold mx-auto mb-3" 
+                className="rounded-circle text-white fw-bold mx-auto mb-3 position-absolute" 
                 style={{ 
                   width: 60, 
                   height: 60, 
                   lineHeight: '60px',
-                  backgroundColor: '#413CB8' 
+                  backgroundColor: '#413CB8',
+                  top: '-30px',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  zIndex: 1
                 }}
               >
                 {step.numero}
               </div>
-              <h5 className="fw-bold">{step.titolo}</h5>
-              <p>{step.testo}</p>
+              <div style={{ marginTop: '20px' }}>
+                <h5 className="fw-bold">{step.titolo}</h5>
+                <p className='mb-0'>{step.testo}</p>
+              </div>
             </div>
           </Col>
         ))}

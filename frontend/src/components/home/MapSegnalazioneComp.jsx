@@ -1,8 +1,7 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import api from '../../services/api';
-import { AuthContext } from '../../context/AuthContext';
 import { Container } from 'react-bootstrap';
 
 // Fix per i marker che altrimenti non si caricano
@@ -13,27 +12,26 @@ L.Icon.Default.mergeOptions({
     shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 });
 
+const createPinIcon = (color) => {
+    const pinSvg = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path fill="${color}" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+        </svg>
+    `;
+
+    return new L.Icon({
+        iconUrl: 'data:image/svg+xml;base64,' + btoa(pinSvg),
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+    });
+};
 
 // Icone personalizzate per i marker in base allo stato della segnalazione
 const markerIcons = {
-    'in attesa': new L.Icon({
-        iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png',
-        iconSize: [32, 32],
-        iconAnchor: [16, 32],
-        popupAnchor: [0, -32],
-    }),
-    'in lavorazione': new L.Icon({
-        iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/orange-dot.png',
-        iconSize: [32, 32],
-        iconAnchor: [16, 32],
-        popupAnchor: [0, -32],
-    }),
-    'risolto': new L.Icon({
-        iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png',
-        iconSize: [32, 32],
-        iconAnchor: [16, 32],
-        popupAnchor: [0, -32],
-    }),
+    'in attesa': createPinIcon('#413CB8'),      // viola
+    'in lavorazione': createPinIcon(' #16B889'),  // verde
+    'risolto': createPinIcon('#e7e6fc')         // Grigio chiaro
 };
 
 

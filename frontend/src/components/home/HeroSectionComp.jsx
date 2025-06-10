@@ -13,12 +13,25 @@ const HeroSection = () => {
             Segnala problemi urbani direttamente dal tuo quartiere.
           </p>
           <div className="d-flex gap-3 mt-4 justify-content-center justify-content-md-start">
-            <Button as={Link} to="/register"
+            <Button 
+              as={Link} 
+              to="/register"
               style={{
                 backgroundColor: '#413CB8',
                 borderColor: '#413CB8',
+                transition: 'all 0.3s ease',
               }}
-            >Inizia ora</Button>
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = '#2F2E40';
+                e.target.style.borderColor = '#2F2E40';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = '#413CB8';
+                e.target.style.borderColor = '#413CB8';
+              }}
+            >
+              Inizia ora
+            </Button>
             <Button as={Link} to="/login" variant="outline-secondary">Accedi</Button>
           </div>
         </Col>
