@@ -1,4 +1,5 @@
 import Segnalazione from '../models/SegnalazioneSchema.js';
+import { sendSegnalazioneConfirmEmail } from '../utils/sendEmailSendgrid.js';
 
 const creaSegnalazione = async (req, res) => {
   const { titolo, descrizione, categoria, lat, lng } = req.body;
@@ -16,6 +17,18 @@ const creaSegnalazione = async (req, res) => {
       immagine: req.file.path,
       utente: req.user._id,
     });
+
+    // Send confirmation email
+    try {
+      await sendSegnalazioneConfirmEmail(
+        req.user.email,
+        req.user.name,
+        segnalazione
+      );
+    } catch (emailError) {
+      console.error('Errore invio email conferma:', emailError);
+      // Continue even if email fails
+    }
 
     res.status(201).json(segnalazione);
   } catch (err) {

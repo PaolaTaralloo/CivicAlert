@@ -1,5 +1,6 @@
 import User from '../models/UserSchema.js';
 import jwt from 'jsonwebtoken';
+import { sendWelcomeEmail } from '../utils/sendEmailSendgrid.js';
 
 
 // Funzione per generare un token JWT
@@ -11,21 +12,34 @@ const generateToken = (user) => {
 
 // Funzione per registrare un nuovo utente
 const registerUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  try {
+    const { name, email, password } = req.body;
 
-  const userExists = await User.findOne({ email });
-  if (userExists)
-    return res.status(400).json({ message: 'Utente già registrato' });
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      return res.status(400).json({ message: 'Utente già registrato' });
+    }
 
-  const user = await User.create({ name, email, password });
+    const user = await User.create({ name, email, password });
 
-  res.status(201).json({
-    _id: user._id,
-    name: user.name,
-    email: user.email,
-    role: user.role,
-    token: generateToken(user),
-  });
+    try {
+      await sendWelcomeEmail(user.email, user.name);
+    } catch (emailError) {
+      console.error('Errore invio email di benvenuto:', emailError);
+      // Continua la registrazione anche se l'invio email fallisce
+    }
+
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      token: generateToken(user),
+    });
+  } catch (error) {
+    console.error('Errore registrazione:', error);
+    res.status(500).json({ message: 'Errore nella registrazione', error: error.message });
+  }
 };
 
 // Funzione di login

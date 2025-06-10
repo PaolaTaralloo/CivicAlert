@@ -9,14 +9,27 @@ const GoogleSuccess = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get('token');
+    const name = params.get('name');
+    const role = params.get('role');
+
     if (token) {
       console.log('Token ricevuto:', token);
       const userData = {
         token,
-        name: 'Google User'
+        name: name || 'Google User',
+        role: role || 'cittadino' // Imposta un ruolo di default
       };
       login(userData);
-      navigate('/dashboard');
+      
+      // Reindirizza in base al ruolo
+      if (role === 'admin') {
+        navigate('/dashboard-admin');
+      } else {
+        navigate('/dashboard');
+      }
+    } else {
+      console.error('Token non ricevuto');
+      navigate('/login');
     }
   }, [login, navigate]);
 

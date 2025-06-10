@@ -15,7 +15,7 @@ passport.use(new GoogleStrategy({
                 name: profile.displayName,
                 email: profile.emails[0].value,
                 password: `google-${Date.now()}`,
-                googleId: profile.id
+                role: 'cittadino' // Imposta un ruolo di default
             });
         }
         return done(null, user);
