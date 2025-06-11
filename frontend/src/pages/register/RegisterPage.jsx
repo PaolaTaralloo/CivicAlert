@@ -17,11 +17,11 @@ const Register = () => {
     setSuccess(''); 
     try {
       const res = await api.post('/auth/register', form);
-      setSuccess('Registrazione effettuata con successo! Verrai reindirizzato al login'); // Aggiungi il messaggio di successo
+      setSuccess('Registrazione effettuata con successo!');
       login(res.data);
       setTimeout(() => {
-        navigate('/login');
-      }, 3000); 
+        navigate('/dashboard'); 
+      }, 2000); 
     } catch (err) {
       setError('Registrazione non riuscita. Email o password non validi');
     }

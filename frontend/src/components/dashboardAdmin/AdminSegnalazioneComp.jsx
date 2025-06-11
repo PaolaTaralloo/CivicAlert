@@ -16,18 +16,16 @@ const AdminSegnalazioniTable = ({ segnalazioni, onUpdateStato }) => {
           <th>Immagine</th>
           <th>Data</th>
           <th>Stato</th>
-          
-          
         </tr>
       </thead>
       <tbody>
         {segnalazioni.map((s) => (
           <tr key={s._id}>
-             <td>{s.utente.name}</td>
+            <td>{s.utente?.name || 'Utente non disponibile'}</td>
             <td>{s.titolo}</td>
             <td>{s.categoria}</td>
             <td>{s.posizione.lat.toFixed(4)}, {s.posizione.lng.toFixed(4)}</td>
-             <td>
+            <td>
               <a href={s.immagine} target="_blank" rel="noopener noreferrer">
                 Visualizza
               </a>

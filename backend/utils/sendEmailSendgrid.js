@@ -72,3 +72,42 @@ export const sendSegnalazioneConfirmEmail = async (userEmail, userName, segnalaz
         throw error;
     }
 };
+
+export const sendStatusUpdateEmail = async (userEmail, userName, segnalazione) => {
+    const statusMessages = {
+        'in lavorazione': 'La tua segnalazione è ora in lavorazione. Il team sta valutando la situazione.',
+        'risolto': 'La tua segnalazione è stata risolta con successo!',
+        'rifiutato': 'La tua segnalazione è stata rifiutata.'
+    };
+
+    const msg = {
+        to: userEmail,
+        from: process.env.EMAIL_SENDER,
+        subject: 'Aggiornamento Segnalazione - CivicAlert',
+        text: `Ciao ${userName},\n\nLa tua segnalazione "${segnalazione.titolo}" è stata aggiornata.\nNuovo stato: ${segnalazione.stato}\n\n${statusMessages[segnalazione.stato]}\n\nGrazie per il tuo contributo!\nIl team di CivicAlert`,
+        html: `
+            <h2>Aggiornamento Segnalazione</h2>
+            <p>Ciao ${userName},</p>
+            <p>La tua segnalazione è stata aggiornata.</p>
+            <div style="margin: 20px 0; padding: 15px; background-color: #f8f9fa; border-radius: 5px;">
+                <p><strong>Titolo:</strong> ${segnalazione.titolo}</p>
+                <p><strong>Categoria:</strong> ${segnalazione.categoria}</p>
+                <p><strong>Nuovo Stato:</strong> <span style="color: ${
+                    segnalazione.stato === 'risolto' ? '#28a745' : 
+                    segnalazione.stato === 'in lavorazione' ? '#ffc107' : '#dc3545'
+                };">${segnalazione.stato}</span></p>
+                <p><em>${statusMessages[segnalazione.stato]}</em></p>
+            </div>
+            <p>Grazie per il tuo contributo nel migliorare la nostra città!</p>
+            <p>Il team di CivicAlert</p>
+        `
+    };
+    
+    try {
+        await sgMail.send(msg);
+        console.log('Status update email sent successfully');
+    } catch (error) {
+        console.error('SendGrid error:', error);
+        throw error;
+    }
+};

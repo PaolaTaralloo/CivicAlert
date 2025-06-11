@@ -1,5 +1,5 @@
 import Segnalazione from '../models/SegnalazioneSchema.js';
-import { sendSegnalazioneConfirmEmail } from '../utils/sendEmailSendgrid.js';
+import { sendSegnalazioneConfirmEmail, sendStatusUpdateEmail } from '../utils/sendEmailSendgrid.js';
 
 const creaSegnalazione = async (req, res) => {
   const { titolo, descrizione, categoria, lat, lng } = req.body;
@@ -53,7 +53,10 @@ const aggiornaStatoSegnalazione = async (req, res) => {
   const { stato } = req.body;
 
   try {
-    const segnalazione = await Segnalazione.findById(id);
+    // Trova la segnalazione e popola i dati dell'utente
+    const segnalazione = await Segnalazione.findById(id)
+      .populate('utente', 'name email');  // Aggiungi questa riga per popolare i dati utente
+
     if (!segnalazione) {
       return res.status(404).json({ message: 'Segnalazione non trovata' });
     }
@@ -65,6 +68,19 @@ const aggiornaStatoSegnalazione = async (req, res) => {
     segnalazione.stato = stato;
     await segnalazione.save();
     
+    // Invia email con i dati utente popolati
+    try {
+      await sendStatusUpdateEmail(
+        segnalazione.utente.email,
+        segnalazione.utente.name,
+        segnalazione
+      );
+      console.log('Email di aggiornamento inviata a:', segnalazione.utente.email);
+    } catch (emailError) {
+      console.error('Errore invio email di aggiornamento:', emailError);
+      // Continua anche se l'invio dell'email fallisce
+    }
+
     res.json({ message: 'Stato aggiornato', segnalazione });
   } catch (err) {
     console.error('Errore aggiornamento:', err);
