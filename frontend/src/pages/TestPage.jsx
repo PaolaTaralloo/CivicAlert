@@ -6,7 +6,7 @@ const TestPage = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/test')
+    axios.get('http://localhost:8080/api/test') // axios.get(`${import.meta.env.VITE_APP_API_URL}/api/test`)
       .then(res => {
         setMessage(res.data.message);
       })
