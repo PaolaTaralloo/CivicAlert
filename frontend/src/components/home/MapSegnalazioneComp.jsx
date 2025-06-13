@@ -62,7 +62,7 @@ const SegnalazioniMap = () => {
             <div style={{ height: '500px', width: '100%', marginTop: '2rem' }}>
                 <MapContainer center={[40.8522, 14.2681]} zoom={13} scrollWheelZoom={true} style={{ height: '100%' }}>
                     <TileLayer
-                        url={`https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=${process.env.VITE_PUBLIC_STADIA_API_KEY}`}
+                        url={`https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=${process.env.VITE_APP_PUBLIC_STADIA_API_KEY}`}
                         attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>'
                     />
 
