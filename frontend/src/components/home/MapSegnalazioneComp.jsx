@@ -38,14 +38,14 @@ const markerIcons = {
 // Componente per visualizzare le segnalazioni su una mappa
 const SegnalazioniMap = () => {
     const [segnalazioni, setSegnalazioni] = useState([]);
-    
+
     useEffect(() => {
         const fetchSegnalazioni = async () => {
             try {
                 const res = await api.get('/segnalazioni/pubbliche');
                 // Verifica nel client che stiamo ricevendo solo le segnalazioni desiderate
                 console.log('Segnalazioni ricevute:', res.data);
-                const segnalazioniFiltrate = res.data.filter(s => 
+                const segnalazioniFiltrate = res.data.filter(s =>
                     ['in attesa', 'in lavorazione'].includes(s.stato)
                 );
                 setSegnalazioni(segnalazioniFiltrate);
@@ -62,7 +62,7 @@ const SegnalazioniMap = () => {
             <div style={{ height: '500px', width: '100%', marginTop: '2rem' }}>
                 <MapContainer center={[40.8522, 14.2681]} zoom={13} scrollWheelZoom={true} style={{ height: '100%' }}>
                     <TileLayer
-                        url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
+                        url={`https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=${process.env.VITE_PUBLIC_STADIA_API_KEY}`}
                         attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>'
                     />
 
